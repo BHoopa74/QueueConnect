@@ -2,6 +2,19 @@
   "timeZone": "Australia/Sydney",
   "dependencies": {
   },
+  "webapp": {
+    "access": "ANYONE_ANONYMOUS",
+    "executeAs": "USER_DEPLOYING"
+  },
   "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8"
+  "runtimeVersion": "V8",
+  "sheets": {
+    "macros": [{
+      "menuName": "Test",
+      "functionName": "Test"
+    }, {
+      "menuName": "Untitled Macro",
+      "functionName": "UntitledMacro"
+    }]
+  }
 }
