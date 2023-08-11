@@ -12,9 +12,9 @@
       <h1 class="heading page_title">Welcome</h1>
     </div>
     <div class="inputs">
-      <label>Name: </label><input class="username" type="text" placeholder="Enter name.." id="username">
+      <label id="label2">Name: </label><input class="username" type="text" placeholder="Enter name.." id="username">
       <br>
-      <label for="choose_queue">Queue: </label> 
+      <label for="choose_queue" id="chse_queue">Queue: </label> 
       <select name="choose_queue" id="choose_queue">
         <option value="select_queue" class="pick">Pick a queue...</option> 
         <option value="Class1">Class 1</option> 
@@ -22,9 +22,12 @@
         <option value="Class3">Class 3</option> 
         <option value="Class4">Class 4</option> 
     </select>
-    <div class="submit">
-    <button class="submit_button" id="submit_btn">Submit</button>
+    <div class="submit" id="submit">
+    <button class="submit_button" onclick="hideAll()" id="submit_btn">Submit</button>
     </div>
+    <p id="place">Your place in the queue is:</p>
+    <p id="position"></p>
+    <p>Please do not refresh</p>
     <style>
 
       .header {
@@ -52,6 +55,7 @@
         border-radius: 200px;
         font-size: 35px;
         border-color: gray;
+        transition-duration: 0.4s;
       }
 
       body {
@@ -60,7 +64,7 @@
 
       .inputs {
         text-align: center;
-        margin-top: 250px;
+        margin-top: 175px;
       }
 
       input {
@@ -84,19 +88,47 @@
         color: gray;
       }
 
+      .submit_button:hover {
+        background-color: gray;
+        color: white;
+      }
+
+      .place {
+        display: none;
+      }
+
     </style>
 
     <script>
+      
 
       document.getElementById("submit_btn").addEventListener("click", doStuff);
 
-      function doStuff(){
+      function onSuccess(position) {
+        console.log(position);
+        document.getElementById("position").textContent = position;
+      }
 
+      function doStuff(){
         var usrname = document.getElementById("username").value;
         var queue_select = document.getElementById("choose_queue").value;
         google.script.run.submit(usrname, queue_select);
-
+        google.script.run.withSuccessHandler(onSuccess)
+          .countSpacesAboveWord(usrname, queue_select);
       }
+
+    function hideAll(){
+      var button = document.getElementById("submit");
+      var selector = document.getElementById("choose_queue");
+      var label = document.getElementById("chse_queue");
+      var input = document.getElementById("username");
+      var label2 = document.getElementById("label2");
+      button.style.display = "none";
+      input.style.display = "none";
+      selector.style.display = "none";
+      label.style.display = "none";
+      label2.style.display = "none";
+    }
 
     </script>
 
