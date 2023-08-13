@@ -10,8 +10,8 @@ function submit(name, queue) {
   ws.appendRow([name]);
 }
 
-function countSpacesAboveWord(name, queue) {
 
+function countSpacesAboveWord(name, queue) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(queue);
   var targetWord = name; // Replace with the word you're searching for
   var columnNumber = 1; // Column number where you want to search (1 for column A)

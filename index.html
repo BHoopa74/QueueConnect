@@ -25,9 +25,9 @@
     <div class="submit" id="submit">
     <button class="submit_button" onclick="hideAll()" id="submit_btn">Submit</button>
     </div>
-    <p id="place">Your place in the queue is:</p>
-    <p id="position"></p>
-    <p>Please do not refresh</p>
+    <p id="place" class="place">Your position in the queue is:</p>
+    <p id="position" class="position"></p>
+    <p id="refresh" class="refresh">Please do not refresh</p>
     <style>
 
       .header {
@@ -97,6 +97,15 @@
         display: none;
       }
 
+      .position {
+        display: none;
+        font-size: 50px;
+      }
+
+      .refresh {
+        display: none;
+      }
+
     </style>
 
     <script>
@@ -104,9 +113,20 @@
 
       document.getElementById("submit_btn").addEventListener("click", doStuff);
 
+      function refresh(){
+        var usrname = document.getElementById("username").value;
+        var queue_select = document.getElementById("choose_queue").value;
+        google.script.run.withSuccessHandler(onSuccess)
+          .countSpacesAboveWord(usrname, queue_select);
+      }
+
       function onSuccess(position) {
         console.log(position);
         document.getElementById("position").textContent = position;
+        while (true) {
+          refresh()
+          await delay(1000);
+        }
       }
 
       function doStuff(){
@@ -115,6 +135,7 @@
         google.script.run.submit(usrname, queue_select);
         google.script.run.withSuccessHandler(onSuccess)
           .countSpacesAboveWord(usrname, queue_select);
+        
       }
 
     function hideAll(){
@@ -123,11 +144,17 @@
       var label = document.getElementById("chse_queue");
       var input = document.getElementById("username");
       var label2 = document.getElementById("label2");
+      var place = document.getElementById("place");
+      var position = document.getElementById("position");
+      var refresh = document.getElementById("refresh");
       button.style.display = "none";
       input.style.display = "none";
       selector.style.display = "none";
       label.style.display = "none";
       label2.style.display = "none";
+      place.style.display = "block";
+      position.style.display = "block";
+      refresh.style.display = "block";
     }
 
     </script>
