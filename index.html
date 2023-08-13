@@ -25,6 +25,7 @@
     <div class="submit" id="submit">
     <button class="submit_button" onclick="hideAll()" id="submit_btn">Submit</button>
     </div>
+    <button class="refresh_button" onclick="button_refresh()" id="refresh_btn">Submit</button>
     <p id="place" class="place">Your position in the queue is:</p>
     <p id="position" class="position"></p>
     <p id="refresh" class="refresh">Please do not refresh</p>
@@ -143,6 +144,13 @@
       place.style.display = "block";
       position.style.display = "block";
       refresh.style.display = "block";
+    }
+
+    function button_refresh(){
+      var usrname = document.getElementById("username").value;
+        var queue_select = document.getElementById("choose_queue").value;
+      google.script.run.withSuccessHandler(onSuccess)
+          .countSpacesAboveWord(usrname, queue_select);
     }
 
     </script>
