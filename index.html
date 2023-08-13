@@ -113,20 +113,9 @@
 
       document.getElementById("submit_btn").addEventListener("click", doStuff);
 
-      function refresh(){
-        var usrname = document.getElementById("username").value;
-        var queue_select = document.getElementById("choose_queue").value;
-        google.script.run.withSuccessHandler(onSuccess)
-          .countSpacesAboveWord(usrname, queue_select);
-      }
-
       function onSuccess(position) {
         console.log(position);
         document.getElementById("position").textContent = position;
-        while (true) {
-          refresh()
-          await delay(1000);
-        }
       }
 
       function doStuff(){
@@ -135,7 +124,6 @@
         google.script.run.submit(usrname, queue_select);
         google.script.run.withSuccessHandler(onSuccess)
           .countSpacesAboveWord(usrname, queue_select);
-        
       }
 
     function hideAll(){
