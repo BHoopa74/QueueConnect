@@ -15,18 +15,14 @@ function countSpacesAboveWord(name, queue) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(queue);
   var targetWord = name; // Replace with the word you're searching for
   var columnNumber = 1; // Column number where you want to search (1 for column A)
-  // console.log(columnNumber);
-  sheet.getRange("A2").activate;
+
   
-  Logger.log(sheet.getLastRow());
   if (sheet.getLastRow() == 0) {
     var data = sheet.getRange(1, columnNumber, 1, 1).getValues();
   } else {
     var data = sheet.getRange(1, columnNumber, sheet.getLastRow(), 1).getValues();
   }
-  
-  // console.log(data);
-  Logger.log(data);
+
   var spaceCount = 0;
   
   for (var i = 0; i < data.length; i++) {
@@ -37,8 +33,7 @@ function countSpacesAboveWord(name, queue) {
       spaceCount++;
     }
   }
-  spaceCount = spaceCount + 1
-  Logger.log("Your position in the queue: " + spaceCount);
+  spaceCount = spaceCount + 1 // add one to find the user's position rather than amount of space above
   return spaceCount;
 }
 

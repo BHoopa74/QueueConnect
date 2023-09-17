@@ -12,7 +12,7 @@
       <h1 class="heading page_title">Welcome</h1>
     </div>
     <div class="inputs">
-      <label id="label2">Name: </label><input class="username" type="text" placeholder="Enter name.." id="username">
+      <label id="label2">Name: </label><input class="username" type="text" placeholder="Enter name..." id="username">
       <br>
       <label for="choose_queue" id="chse_queue">Queue: </label> 
       <select name="choose_queue" id="choose_queue">
@@ -25,10 +25,10 @@
     <div class="submit" id="submit">
     <button class="submit_button" onclick="hideAll()" id="submit_btn">Submit</button>
     </div>
-    <button class="refresh_button" onclick="button_refresh()" id="refresh_btn">Submit</button>
     <p id="place" class="place">Your position in the queue is:</p>
     <p id="position" class="position"></p>
-    <p id="refresh" class="refresh">Please do not refresh</p>
+    <p id="refresh" class="refresh">Please do not refresh page</p>
+    <button class="refresh_button" onclick="button_refresh()" id="refresh_btn">Refresh Queue</button>
     <style>
 
       .header {
@@ -107,6 +107,11 @@
         display: none;
       }
 
+      .refresh_button {
+        display: none;
+        margin: auto;
+      }
+
     </style>
 
     <script>
@@ -136,6 +141,7 @@
       var place = document.getElementById("place");
       var position = document.getElementById("position");
       var refresh = document.getElementById("refresh");
+      var refresh_btn = document.getElementById("refresh_btn");
       button.style.display = "none";
       input.style.display = "none";
       selector.style.display = "none";
@@ -144,6 +150,7 @@
       place.style.display = "block";
       position.style.display = "block";
       refresh.style.display = "block";
+      refresh_btn.style.display = "block";
     }
 
     function button_refresh(){
