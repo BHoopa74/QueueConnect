@@ -14,15 +14,15 @@
     </div>
 
     <!--role selection page-->
-    <div class="role_select" id="role_select">
-      <p class="select_role_text">Please select a role:</p>
-      <button class="role_select_button" onclick="revealStudent()" id="student_button">Student</button>
+    <div class="role_select">
+      <p class="select_role_text">Please select a role</p>
+      <button class="role_select_button" onclick="" id="student_button">Student</button>
       <button class="role_select_button" onclick="" id="teacher_button">Teacher</button>
     </div>
 
 
     <!--student queue selection page-->
-    <div class="inputs" id="student_page">
+    <div class="inputs">
       <label id="label2">Name: </label><input class="username" type="text" placeholder="Enter name..." id="username">
       <br>
       <label for="choose_queue" id="chse_queue">Queue: </label> 
@@ -33,41 +33,18 @@
         <option value="Class3">Class 3</option> 
         <option value="Class4">Class 4</option> 
       </select>
-    </div>
 
     <div class="submit" id="submit">
-    <button class="submit_button" onclick="hideAllStudent()" id="submit_btn">Submit</button>
+    <button class="submit_button" onclick="hideAll()" id="submit_btn">Submit</button>
     </div>
 
-    <div class="status" id="status">
-      <p id="place" class="place">Your position in the queue is:</p>
-      <p id="position" class="position"></p>
-      <p id="refresh" class="refresh">Please do not refresh page</p>
-      <button class="refresh_button" onclick="button_refresh()" id="refresh_btn">Refresh Queue</button>
-    </div>
-    
+    <p id="place" class="place">Your position in the queue is:</p>
+    <p id="position" class="position"></p>
+    <p id="refresh" class="refresh">Please do not refresh page</p>
+
+    <button class="refresh_button" onclick="button_refresh()" id="refresh_btn">Refresh Queue</button>
 
     <style>
-      
-      .role_select {
-        text-align: center;
-        margin-top: 175px;
-        font-size: 30px;
-      }
-
-      .role_select_button {
-        padding: 10px 25px 10px 25px;
-        background-color: white;
-        border-radius: 5px;
-        font-size: 35px;
-        border-color: gray;
-        transition-duration: 0.4s;
-      }
-
-      .role_select_button:hover {
-        background-color: gray;
-        color: white;
-      }
 
       .header {
         background-color: rgb(75, 125, 35);
@@ -104,7 +81,6 @@
       .inputs {
         text-align: center;
         margin-top: 175px;
-        display: none;
       }
 
       input {
@@ -133,16 +109,22 @@
         color: white;
       }
 
+      .place {
+        display: none;
+      }
+
       .position {
+        display: none;
         font-size: 50px;
       }
 
-      .refresh_button {
-        margin: auto;
+      .refresh {
+        display: none;
       }
 
-      .status {
+      .refresh_button {
         display: none;
+        margin: auto;
       }
 
     </style>
@@ -165,22 +147,16 @@
           .countSpacesAboveWord(usrname, queue_select);
       }
 
-    function revealStudent(){
-      var rl_slect = document.getElementById("role_select");
-      rl_slect.style.display = "none";
-      var student_page = document.getElementById("student_page")
-      student_page.style.display = "block";
-    }
-
-    function hideAllStudent(){ // hides and reveals assets
-      var student_page = document.getElementById("student_page")
+    function hideAll(){ // hides and reveals assets
       var button = document.getElementById("submit");
       var selector = document.getElementById("choose_queue");
       var label = document.getElementById("chse_queue");
       var input = document.getElementById("username");
       var label2 = document.getElementById("label2");
-      var status = document.getElementById("status")
-      student_page.style.display = "none";
+      var place = document.getElementById("place");
+      var position = document.getElementById("position");
+      var refresh = document.getElementById("refresh");
+      var refresh_btn = document.getElementById("refresh_btn");
       button.style.display = "none";
       input.style.display = "none";
       selector.style.display = "none";
@@ -190,7 +166,6 @@
       position.style.display = "block";
       refresh.style.display = "block";
       refresh_btn.style.display = "block";
-      status.style.display = "block";
     }
 
     function button_refresh(){
