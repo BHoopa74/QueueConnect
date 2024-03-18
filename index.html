@@ -17,9 +17,8 @@
     <div class="role_select" id="role_select">
       <p class="select_role_text">Please select a role:</p>
       <button class="role_select_button" onclick="revealStudent()" id="student_button">Student</button>
-      <button class="role_select_button" onclick="" id="teacher_button">Teacher</button>
+      <button class="role_select_button" onclick="reveal_queue_select_page()" id="teacher_button">Teacher</button>
     </div>
-
 
     <!--student queue selection page-->
     <div class="inputs" id="student_page">
@@ -46,6 +45,19 @@
       <button class="refresh_button" onclick="button_refresh()" id="refresh_btn">Refresh Queue</button>
     </div>
     
+    <!--teacher queue create/select page-->
+    <div class="queue_select_page" id="queue_select_page">
+      <button class="create_queue_button" onclick="create_queue()" id="create_queue_button">Create a new queue</button>
+    </div>
+
+    <!--teacher queue creation page-->
+    <div class="queue_create_menu" id="queue_create_menu">
+      <label>Queue name: </label><input class="queue_name" type="text" placeholder="Enter name..." id="queue_name">
+      <br>
+      <label>Password: </label><input class="queue_password" type="text" placeholder="Enter password..." id="queue_password">
+      <button class="queue_submit" onclick="submit_queue()" id="queue_submit">Create Queue</button>
+    </div>
+
 
     <style>
       
@@ -86,6 +98,7 @@
       .submit {
         text-align: center;
         margin-top: 50px;
+        display: none;
       }
 
       .submit_button {
@@ -145,6 +158,14 @@
         display: none;
       }
 
+      .queue_create_menu {
+        display: none;
+      }
+
+      .queue_select_page {
+        display: none;
+      }
+
     </style>
 
     <script>
@@ -170,6 +191,8 @@
       rl_slect.style.display = "none";
       var student_page = document.getElementById("student_page")
       student_page.style.display = "block";
+      var submit = document.getElementById("submit")
+      submit.style.display = "block"
     }
 
     function hideAllStudent(){ // hides and reveals assets
@@ -199,6 +222,39 @@
       google.script.run.withSuccessHandler(onSuccess)
           .countSpacesAboveWord(usrname, queue_select);
     }
+
+    function hide_all(){
+      var role_select = document.getElementById("role_select");
+      role_select.style.display = "none";
+      var student_page = document.getElementById("student_page");
+      student_page.style.display = "none";
+      var submit = document.getElementById("submit");
+      submit.style.display = "none";
+      var status = document.getElementById("status");
+      status.style.display = "none";
+      var queue_create_menu = document.getElementById("queue_create_menu");
+      queue_create_menu.style.display = "none";
+      var queue_select_page = document.getElementById("queue_select_page");
+      queue_select_page.style.display = "none";
+    }
+
+    function reveal_queue_select_page(){
+      hide_all()
+      var queue_select_page = document.getElementById("queue_select_page")
+      queue_select_page.style.display = "block";
+    }
+
+    function create_queue(){
+      hide_all()
+      var queue_create_menu = document.getElementById("queue_create_menu");
+      queue_create_menu.style.display = "block";
+    }
+
+    function submit_queue(){
+      var queue_name = document.getElementById("queue_name").value;
+      google.script.run.newQueue(queue_name);
+    }
+
 
     </script>
 
