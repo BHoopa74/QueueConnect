@@ -61,7 +61,7 @@ function get_queue_contents_GS(queue) {
   var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
   var ss = SpreadsheetApp.openByUrl(url).getSheetByName(queue);
   Logger.log(ss)
-  var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues()
+  var values = ss.getDataRange().getValues()
   //var data = ss.getDataRange().getNumRows()
   for (n = 0; n < values.length; ++n) {
     Logger.log(values[n][0])

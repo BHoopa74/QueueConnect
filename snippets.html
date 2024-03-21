@@ -5,3 +5,13 @@ var student_page = document.getElementById("student_page")
       var input = document.getElementById("username");
       var label2 = document.getElementById("label2");
       var status = document.getElementById("status")
+
+
+            for (i in queue_names) {
+              var queue_page = document.createElement("p");
+              console.log(queue_names[i])
+              var queue_node = document.createTextNode(queue_names[i]);
+              queue_page.appendChild(queue_node);
+              var element = document.getElementById("queue_display"); 
+              element.appendChild(queue_page);
+            }

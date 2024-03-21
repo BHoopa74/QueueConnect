@@ -61,6 +61,7 @@
     <!-- queue display page -->
     <div class="queue_display" id="queue_display">
       <p id="queue_title">Students:</p>
+      <button onclick="call_reveal_queue_select_page()">Back</button>
     </div>
 
 
@@ -253,16 +254,9 @@
       google.script.run.withSuccessHandler(reveal_queue_select_page).getSheetNames();
     }
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     function get_queue_contents(queue_name) {
-      alert("Step 1")
       google.script.run.withSuccessHandler(function(names) {
-        //queue_names = names
-        alert("Step 2")
-        return names
+        display_queue_button_part_2(names)
       }).get_queue_contents_GS(queue_name);
     }
 
@@ -285,20 +279,11 @@
           btn.addEventListener("click", function () {
             hide_all()
             console.log("I've been clicked")
-            console.log(btn.id)
             queue_title.textContent = this.getAttribute("name");
-            queue_names = get_queue_contents(this.getAttribute("name"));
-            alert("Step 3")
+            queue_title.style.fontWeight = "bold";
+            get_queue_contents(this.getAttribute("name"));
             var queue_display = document.getElementById("queue_display")
             queue_display.style.display = "block";
-            for (i in queue_names) {
-              var queue_page = document.createElement("p");
-              console.log(queue_names[i])
-              var queue_node = document.createTextNode(queue_names[i]);
-              queue_page.appendChild(queue_node);
-              var element = document.getElementById("queue_display"); 
-              element.appendChild(queue_page);
-            }
           })
 
           btn.appendChild(node);
@@ -306,6 +291,19 @@
           element.appendChild(btn);
           lists.push(names[name][0])
         }
+      }
+    }
+
+    function display_queue_button_part_2(queue_names) {
+      var queue_display = document.getElementById("queue_display")
+      queue_display.style.display = "block";
+      for (i in queue_names) {
+        var queue_page = document.createElement("p");
+        console.log(queue_names[i])
+        var queue_node = document.createTextNode(queue_names[i]);
+        queue_page.appendChild(queue_node);
+        var element = document.getElementById("queue_display"); 
+        element.appendChild(queue_page);
       }
     }
 
@@ -324,8 +322,6 @@
       call_reveal_queue_select_page()
     }
 
-    
-    
     </script>
 
   </body>
