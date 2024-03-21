@@ -2,10 +2,23 @@ function doGet() {
   return HtmlService.createHtmlOutputFromFile("index");
 }
 
-function newQueue(name) {
+function newQueue(name, password) {
   var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
   var ss = SpreadsheetApp.openByUrl(url);
   ss.insertSheet(name);
+  ss.getRange("B1").setValue(password)
+}
+
+function countSheets() {
+  return SpreadsheetApp.getActive().getSheets().length;
+}
+
+function getSheetNames() {
+  var out = new Array()
+  var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  for (var i=0 ; i<sheets.length ; i++) out.push( [ sheets[i].getName() ] )
+  Logger.log(out)
+  return out 
 }
 
 function submit(name, queue) {
@@ -43,4 +56,22 @@ function countSpacesAboveWord(name, queue) {
   return spaceCount;
 }
 
-
+function get_queue_contents_GS(queue) {
+  names = []
+  var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
+  var ss = SpreadsheetApp.openByUrl(url).getSheetByName(queue);
+  Logger.log(ss)
+  var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues()
+  //var data = ss.getDataRange().getNumRows()
+  for (n = 0; n < values.length; ++n) {
+    Logger.log(values[n][0])
+    if (values[n][0] == null){
+      break
+    } else {
+      var cell = values[n][0] ; // x is the index of the column starting from 0
+    names.push(cell)
+    }
+  }
+  Logger.log(names)
+  return names
+}

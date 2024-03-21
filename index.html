@@ -17,7 +17,7 @@
     <div class="role_select" id="role_select">
       <p class="select_role_text">Please select a role:</p>
       <button class="role_select_button" onclick="revealStudent()" id="student_button">Student</button>
-      <button class="role_select_button" onclick="reveal_queue_select_page()" id="teacher_button">Teacher</button>
+      <button class="role_select_button" onclick="call_reveal_queue_select_page()" id="teacher_button">Teacher</button>
     </div>
 
     <!--student queue selection page-->
@@ -47,7 +47,7 @@
     
     <!--teacher queue create/select page-->
     <div class="queue_select_page" id="queue_select_page">
-      <button class="create_queue_button" onclick="create_queue()" id="create_queue_button">Create a new queue</button>
+      <button class="create_queue_button" onclick="reveal_create_queue()" id="create_queue_button">Create a new queue</button>
     </div>
 
     <!--teacher queue creation page-->
@@ -56,6 +56,11 @@
       <br>
       <label>Password: </label><input class="queue_password" type="text" placeholder="Enter password..." id="queue_password">
       <button class="queue_submit" onclick="submit_queue()" id="queue_submit">Create Queue</button>
+    </div>
+
+    <!-- queue display page -->
+    <div class="queue_display" id="queue_display">
+      <p id="queue_title">Students:</p>
     </div>
 
 
@@ -166,10 +171,16 @@
         display: none;
       }
 
+      .queue_display {
+        display: none;
+      }
+
     </style>
 
     <script>
       
+      var lists = [];
+      var queue_names = "unchanged"
 
       document.getElementById("submit_btn").addEventListener("click", doStuff);
 
@@ -238,13 +249,68 @@
       queue_select_page.style.display = "none";
     }
 
-    function reveal_queue_select_page(){
+    function call_reveal_queue_select_page(){
+      google.script.run.withSuccessHandler(reveal_queue_select_page).getSheetNames();
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function get_queue_contents(queue_name) {
+      alert("Step 1")
+      google.script.run.withSuccessHandler(function(names) {
+        //queue_names = names
+        alert("Step 2")
+        return names
+      }).get_queue_contents_GS(queue_name);
+    }
+
+    function reveal_queue_select_page(names){
+      
       hide_all()
       var queue_select_page = document.getElementById("queue_select_page")
       queue_select_page.style.display = "block";
+
+      counter = 0
+
+      for (name in names) {
+        if (!(lists.includes(names[name][0]))) {
+          counter = counter + 1
+          var btn = document.createElement("button");
+          btn.setAttribute("name", names[name][0]);
+          btn.id = "test";
+          var node = document.createTextNode(names[name]);
+
+          btn.addEventListener("click", function () {
+            hide_all()
+            console.log("I've been clicked")
+            console.log(btn.id)
+            queue_title.textContent = this.getAttribute("name");
+            queue_names = get_queue_contents(this.getAttribute("name"));
+            alert("Step 3")
+            var queue_display = document.getElementById("queue_display")
+            queue_display.style.display = "block";
+            for (i in queue_names) {
+              var queue_page = document.createElement("p");
+              console.log(queue_names[i])
+              var queue_node = document.createTextNode(queue_names[i]);
+              queue_page.appendChild(queue_node);
+              var element = document.getElementById("queue_display"); 
+              element.appendChild(queue_page);
+            }
+          })
+
+          btn.appendChild(node);
+          var element = document.getElementById("queue_select_page");
+          element.appendChild(btn);
+          lists.push(names[name][0])
+        }
+      }
     }
 
-    function create_queue(){
+
+    function reveal_create_queue(){
       hide_all()
       var queue_create_menu = document.getElementById("queue_create_menu");
       queue_create_menu.style.display = "block";
@@ -252,13 +318,16 @@
 
     function submit_queue(){
       var queue_name = document.getElementById("queue_name").value;
-      google.script.run.newQueue(queue_name);
+      var queue_password = document.getElementById("queue_password").value;
+      google.script.run.newQueue(queue_name, queue_password);
+      hide_all()
+      call_reveal_queue_select_page()
     }
 
-
+    
+    
     </script>
 
   </body>
 
 </html>
-
