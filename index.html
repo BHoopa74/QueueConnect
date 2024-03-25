@@ -53,9 +53,11 @@
 
     <!--teacher queue creation page-->
     <div class="queue_create_menu" id="queue_create_menu">
-      <label>Queue name: </label><input class="queue_name" type="text" placeholder="Enter name..." id="queue_name">
       <br>
-      <label>Password: </label><input class="queue_password" type="text" placeholder="Enter password..." id="queue_password">
+      <label class="queue_label">Queue name: </label><input class="queue_inputs" type="text" placeholder="Enter name..." id="queue_name">
+      <br>
+      <label class="queue_label">Password: </label><input class="queue_inputs" type="text" placeholder="Enter password..." id="queue_password">
+      <br>
       <button class="queue_submit" onclick="submit_queue()" id="queue_submit">Create Queue</button>
     </div>
 
@@ -69,7 +71,56 @@
 
 
     <style>
-      
+      .username {
+        margin-bottom: 10px;
+      }
+
+      .queue_inputs {
+        display: block;
+        margin: auto;
+      }
+
+      .queue_label {
+        margin-top: 30px
+        display: inline-block;
+        margin-left: 495px;
+      }
+
+      .queue_submit {
+        padding: 10px 25px 10px 25px;
+        background-color: white;
+        border-radius: 200px;
+        font-size: 35px;
+        border-color: gray;
+        transition-duration: 0.4s;
+        margin-left: 510px;
+        margin-right: 500px;
+      }
+
+      .queue_submit:hover {
+        background-color: gray;
+        color: white;
+      }
+
+      .create_queue_button {
+        padding: 10px 25px 10px 25px;
+        background-color: light-gray;
+        border-radius: 15px;
+        font-size: 15px;
+        border-color: gray;
+        transition-duration: 0.2s;
+        margin-left: 530px;
+        margin-right: 500px;
+        margin-bottom: 15px;
+        width: 20%;
+        margin-top: 20px;
+      }
+
+      .create_queue_button:hover {
+        background-color: white;
+        color: black;
+      }
+
       .role_select {
         text-align: center;
         margin-top: 175px;
@@ -101,7 +152,7 @@
       }
 
       .page_title {
-        margin-left: 400px;
+        margin-left: 350px;
       }
 
       .submit {
@@ -183,6 +234,24 @@
         position: absolute;
         top: 100px;
         left: 5px;
+      }
+
+      .queue_button {
+        padding: 10px 30px 10px 30px;
+        background-color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        border-color: gray;
+        transition-duration: 0.2s;
+        margin-left: 500px;
+        margin-right: 500px;
+        margin-bottom: 10px;
+        width: 25%;
+      }
+
+      .queue_button:hover {
+        background-color: gray;
+        color: white;
       }
 
     </style>
@@ -304,10 +373,13 @@
             queue_display.style.display = "block";
           })
 
+          btn.classList.add("queue_button");
           btn.appendChild(node);
           var element = document.getElementById("queue_select_page");
           element.appendChild(btn);
-          lists.push(names[name][0])
+          lists.push(names[name][0]);
+          var br = document.createElement("br");
+          element.appendChild(br);
         }
       }
     }
@@ -336,6 +408,8 @@
       var queue_password = document.getElementById("queue_password").value;
       google.script.run.newQueue(queue_name, queue_password);
       hide_all()
+      document.getElementById("queue_name").value = "";
+      document.getElementById("queue_password").value = "";
       call_reveal_queue_select_page()
     }
 
