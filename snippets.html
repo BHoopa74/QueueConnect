@@ -15,3 +15,25 @@ var student_page = document.getElementById("student_page")
               var element = document.getElementById("queue_display"); 
               element.appendChild(queue_page);
             }
+
+
+function hideAllStudent(){ // hides and reveals assets
+      var student_page = document.getElementById("student_page")
+      var button = document.getElementById("submit");
+      var selector = document.getElementById("choose_queue");
+      var label = document.getElementById("chse_queue");
+      var input = document.getElementById("username");
+      var label2 = document.getElementById("label2");
+      var status = document.getElementById("status")
+      student_page.style.display = "none";
+      button.style.display = "none";
+      input.style.display = "none";
+      selector.style.display = "none";
+      label.style.display = "none";
+      label2.style.display = "none";
+      place.style.display = "block";
+      position.style.display = "block";
+      refresh.style.display = "block";
+      refresh_btn.style.display = "block";
+      status.style.display = "block";
+    }

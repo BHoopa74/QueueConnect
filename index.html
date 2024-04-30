@@ -25,20 +25,14 @@
       <label id="label2">Name: </label><input class="username" type="text" placeholder="Enter name..." id="username">
       <br>
       <label id="chse_queue">Queue: </label><input type="text" placeholder="Enter queue..." id="choose_queue">
-      <!-- <label for="choose_queue" id="chse_queue">Queue: </label> 
-      <select name="choose_queue" id="choose_queue">
-        <option value="select_queue" class="pick">Pick a queue...</option> 
-        <option value="Class1">Class 1</option> 
-        <option value="Class2">Class 2</option> 
-        <option value="Class3">Class 3</option> 
-        <option value="Class4">Class 4</option> 
-      </select> -->
     </div>
 
+    <!-- student name submut button -->
     <div class="submit" id="submit">
     <button class="submit_button" onclick="hideAllStudent()" id="submit_btn">Submit</button>
     </div>
 
+    <!-- Refresh button and position in queue display -->
     <div class="status" id="status">
       <p id="place" class="place">Your position in the queue is:</p>
       <p id="position" class="position"></p>
@@ -258,10 +252,10 @@
 
     <script>
       
-      var lists = [];
+      var lists = []; //an array that is filled with the names of all queues
       var queue_names = "unchanged"
 
-      document.getElementById("submit_btn").addEventListener("click", doStuff);
+      document.getElementById("submit_btn").addEventListener("click", doStuff); //adds doStuff function to the submit button
 
       function onSuccess(position) {
         console.log(position);
@@ -285,27 +279,6 @@
       submit.style.display = "block"
     }
 
-    function hideAllStudent(){ // hides and reveals assets
-      var student_page = document.getElementById("student_page")
-      var button = document.getElementById("submit");
-      var selector = document.getElementById("choose_queue");
-      var label = document.getElementById("chse_queue");
-      var input = document.getElementById("username");
-      var label2 = document.getElementById("label2");
-      var status = document.getElementById("status")
-      student_page.style.display = "none";
-      button.style.display = "none";
-      input.style.display = "none";
-      selector.style.display = "none";
-      label.style.display = "none";
-      label2.style.display = "none";
-      place.style.display = "block";
-      position.style.display = "block";
-      refresh.style.display = "block";
-      refresh_btn.style.display = "block";
-      status.style.display = "block";
-    }
-
     function button_refresh(){
       var usrname = document.getElementById("username").value;
         var queue_select = document.getElementById("choose_queue").value;
@@ -313,7 +286,7 @@
           .countSpacesAboveWord(usrname, queue_select);
     }
 
-    function hide_all(){
+    function hide_all(){ //hides all divs except for header bar
       var role_select = document.getElementById("role_select");
       role_select.style.display = "none";
       var student_page = document.getElementById("student_page");
@@ -330,7 +303,7 @@
       queue_display.style.display = "none";
     }
 
-    function back() {
+    function back() { //goes back from queue create page
       var queue_page = document.getElementById("queue_display")
       while (queue_page.childElementCount > 4) {
         queue_page.removeChild(queue_page.lastChild);
@@ -347,7 +320,7 @@
       }).get_queue_contents_GS(queue_name);
     }
 
-    function reveal_queue_select_page(names){
+    function reveal_queue_select_page(names){ //names is an array containing the name of each spreadsheet
       
       hide_all()
       var queue_select_page = document.getElementById("queue_select_page")
@@ -356,19 +329,17 @@
       counter = 0
 
       for (name in names) {
-        if (!(lists.includes(names[name][0]))) {
+        if (!(lists.includes(names[name][0]))) { //runs if lists does not include the iteration of names
           counter = counter + 1
           var btn = document.createElement("button");
-          btn.setAttribute("name", names[name][0]);
-          btn.id = "test";
-          var node = document.createTextNode(names[name]);
+          btn.setAttribute("name", names[name][0]); //sets the name attribute of the button to names[name]
+          var node = document.createTextNode(names[name]); //adds the iteration of names as the label to the button
 
           btn.addEventListener("click", function () {
             hide_all()
-            console.log("I've been clicked")
-            queue_title.textContent = this.getAttribute("name");
+            queue_title.textContent = this.getAttribute("name"); //uses the name attribute of the button to create title
             queue_title.style.fontWeight = "bold";
-            get_queue_contents(this.getAttribute("name"));
+            get_queue_contents(this.getAttribute("name")); //passes the name attribute into get_queue_contents
             var queue_display = document.getElementById("queue_display")
             queue_display.style.display = "block";
           })
