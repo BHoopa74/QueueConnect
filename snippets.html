@@ -38,3 +38,17 @@ function hideAllStudent(){ // hides and reveals assets
       refresh_btn.style.display = "block";
       status.style.display = "block";
     }
+
+     <p>Move Student:</p>
+      <label class="move_student_label">Student name: </label><input class="move_student_input" type="text" placeholder="Enter name..." id="move_student_input">
+      <label class="move_student_label">New position: </label><input class="move_student_input" type="text" placeholder="Enter number..." id="new_position_input">
+      <button onclick="move_student()" id="move_student_button">Move</button>
+
+          function move_student(){
+      target_student = document.getElementById("move_student_input").value
+      get_queue_contents(queue_name)
+      new_position = document.getElementById("new_position_input").value
+      alert(target_student)
+      alert(new_position)
+
+    }

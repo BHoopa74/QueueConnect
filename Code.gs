@@ -74,3 +74,23 @@ function get_queue_contents_GS(queue) {
   Logger.log(names)
   return names
 }
+
+function remove_name_from_queue(remove_name, queue) {
+  var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
+  var ss = SpreadsheetApp.openByUrl(url);
+  var ws = ss.getSheetByName(queue);
+  i = 0
+  data = sheet.getRange(1, 1, sheet.getLastRow(), 1).getValues();
+  for (i in data) {
+    if (data[i] == remove_name) {
+      break
+    } else {
+      i++
+    }
+  }
+  location = "A" + i
+  Logger.log(location)
+  spreadsheet.getRange(location).activate();
+  spreadsheet.getActiveRangeList().clear({contentsOnly: true, skipFilteredRows: true});
+  spreadsheet.getRange('A5:sheet.getLastRow()').moveTo(spreadsheet.getActiveRange());
+}
