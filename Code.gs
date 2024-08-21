@@ -92,9 +92,50 @@ function remove_name_from_queue(remove_name, queue) {
   ws.getRange(location).activate();
   Logger.log("The item found at the location was: " + ws.getRange(location).getValues())
   ws.getActiveRangeList().clear({contentsOnly: true, skipFilteredRows: true});
-  // movestart = "A" + (i + 1)
-  // moveend = "A" + ws.getLastRow()
-  // Logger.log(ws.getLastRow())
   ws.getRange(i + 1, 1, ws.getLastRow() - i, 1).moveTo(ws.getRange(location));
+  return(queue)
+}
+
+function move_name_up(move_name, queue) {
+  var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
+  var ss = SpreadsheetApp.openByUrl(url);
+  var ws = ss.getSheetByName(queue);
+  i = 1
+  data = ws.getRange(1, 1, ws.getLastRow(), 1).getValues();
+  for (i in data) {
+    if (data[i] == move_name) {
+      i++
+      break
+    } else {
+      i++
+    }
+  }
+  move_location = "A" + i
+  target_location = "A" + (i - 1)
+  temp = ws.getRange(target_location).getValues();
+  ws.getRange(target_location).setValue(move_name)
+  ws.getRange(move_location).setValue(temp)  
+  return(queue)
+}
+
+function move_name_down(move_name, queue) {
+  var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
+  var ss = SpreadsheetApp.openByUrl(url);
+  var ws = ss.getSheetByName(queue);
+  i = 1
+  data = ws.getRange(1, 1, ws.getLastRow(), 1).getValues();
+  for (i in data) {
+    if (data[i] == move_name) {
+      i++
+      break
+    } else {
+      i++
+    }
+  }
+  move_location = "A" + i
+  target_location = "A" + (i + 1)
+  temp = ws.getRange(target_location).getValues();
+  ws.getRange(target_location).setValue(move_name)
+  ws.getRange(move_location).setValue(temp)  
   return(queue)
 }

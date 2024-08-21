@@ -57,8 +57,6 @@
 
     <!-- queue display page -->
     <div class="queue_display" id="queue_display">
-      <br>
-      <br>
       <p id="queue_title">Students:</p>
       <button class="queue_back_button" onclick="call_reveal_queue_select_page(); back()">Back</button>
     </div>
@@ -312,7 +310,7 @@
 
     function back() { //goes back from queue create page
       var queue_page = document.getElementById("queue_display")
-      while (queue_page.childElementCount > 4) {
+      while (queue_page.childElementCount > 2) {
         queue_page.removeChild(queue_page.lastChild);
       }
     }
@@ -346,6 +344,7 @@
             hide_all()
             queue_title.textContent = this.getAttribute("name"); //uses the name attribute of the button to create title
             queue_title.style.fontWeight = "bold";
+            queue_title.style.color = "white";
             current_queue = this.getAttribute("name");
             get_queue_contents(this.getAttribute("name")); //passes the name attribute into get_queue_contents
             var queue_display = document.getElementById("queue_display")
@@ -366,6 +365,16 @@
     function display_queue_button_part_2(queue_names) { //displays the contents of the queue
       var queue_display = document.getElementById("queue_display")
       queue_display.style.display = "block";
+      queue_display.style.fontSize = "30px";
+      queue_display.style.maxWidth = "fit-content";
+      queue_display.style.marginLeft = "auto";
+      queue_display.style.marginRight = "auto";
+      queue_display.style.marginTop = "30px";
+      queue_display.style.backgroundColor = "#5e8b52";
+      queue_display.style.paddingLeft = "60px";
+      queue_display.style.paddingRight = "70px";
+      queue_display.style.paddingTop = "10px";
+      queue_display.style.borderRadius = "20px";
       for (i in queue_names) {
         var queue_page = document.createElement("p");
         var queue_node = document.createTextNode(queue_names[i]);
@@ -375,16 +384,13 @@
 
         var remove_button = document.createElement("button");
         remove_button.setAttribute("name", queue_names[i]); //sets the name attribute of the button to the name it is next to
-        var node = document.createTextNode("X"); //adds the iteration of queue_names as the label to the button
+        var node = document.createTextNode("X"); 
        
         remove_button.addEventListener("click", function () {
           remove_name = this.getAttribute("name")
-          alert(current_queue)
-          alert(remove_name)
           google.script.run.withSuccessHandler(function(current_queue) {
-            alert(current_queue)
             var queue_page = document.getElementById("queue_display")
-            while (queue_page.childElementCount > 4) { //removes all of the names
+            while (queue_page.childElementCount > 2) { //removes all of the names
               queue_page.removeChild(queue_page.lastChild);
             }
             get_queue_contents(current_queue) //adds all of the names back from the updated list
@@ -396,16 +402,54 @@
         var element = document.getElementById("queue_display");
         element.appendChild(remove_button);
         remove_button.style.display = "inline-block";
-        var br = document.createElement("br");
-        element.appendChild(br);
+        remove_button.style.borderTopLeftRadius = "10px"
+        remove_button.style.borderBottomLeftRadius = "10px"
+        remove_button.style.borderWidth = "2px"
+
+        var up_button = document.createElement("button");
+        up_button.setAttribute("name", queue_names[i]); //sets the name attribute of the button to the name it is next to
+        var node = document.createTextNode("↑"); 
+        up_button.classList.add("remove_button");
+        up_button.appendChild(node);
+        var element = document.getElementById("queue_display");
+        element.appendChild(up_button);
+        up_button.style.display = "inline-block";
+
+        up_button.addEventListener("click", function () {
+          move_name = this.getAttribute("name")
+          google.script.run.withSuccessHandler(function(current_queue) {
+            var queue_page = document.getElementById("queue_display")
+            while (queue_page.childElementCount > 2) { //removes all of the names
+              queue_page.removeChild(queue_page.lastChild);
+            }
+            get_queue_contents(current_queue) //adds all of the names back from the updated list
+          }).move_name_up(move_name, current_queue);
+        })
+
+        var down_button = document.createElement("button");
+        down_button.setAttribute("name", queue_names[i]); //sets the name attribute of the button to the name it is next to
+        var node = document.createTextNode("↓"); 
+        down_button.classList.add("remove_button");
+        down_button.appendChild(node);
+        var element = document.getElementById("queue_display");
+        element.appendChild(down_button);
+        down_button.style.display = "inline-block";
+        down_button.style.borderTopRightRadius = "10px"
+        down_button.style.borderBottomRightRadius = "10px"
+        down_button.style.borderWidth = "2px"
+
+        down_button.addEventListener("click", function () {
+          move_name = this.getAttribute("name")
+          google.script.run.withSuccessHandler(function(current_queue) {
+            var queue_page = document.getElementById("queue_display")
+            while (queue_page.childElementCount > 2) { //removes all of the names
+              queue_page.removeChild(queue_page.lastChild);
+            }
+            get_queue_contents(current_queue) //adds all of the names back from the updated list
+          }).move_name_down(move_name, current_queue);
+        })
       }
     }
-
-    // function remove_name(remove_name, queue_name) {
-    //   google.script.run.withSuccessHandler(function(remove_name, queue_name) {
-    //     --
-    //   }).remove_name_from_queue(remove_name, queue_name);
-    // }
 
     function reveal_create_queue(){ //shows the queue create menu
       hide_all()
@@ -424,9 +468,8 @@
     }
 
     function refresh(queue_name){
-      alert(queue_name)
       var queue_page = document.getElementById("queue_display")
-      while (queue_page.childElementCount > 4) {
+      while (queue_page.childElementCount > 2) {
         queue_page.removeChild(queue_page.lastChild);
       }
       get_queue_contents(queue_name)
