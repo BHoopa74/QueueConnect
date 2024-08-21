@@ -92,7 +92,9 @@ function remove_name_from_queue(remove_name, queue) {
   ws.getRange(location).activate();
   Logger.log("The item found at the location was: " + ws.getRange(location).getValues())
   ws.getActiveRangeList().clear({contentsOnly: true, skipFilteredRows: true});
-  ws.getRange(i + 1, 1, ws.getLastRow() - i, 1).moveTo(ws.getRange(location));
+  if (ws.getRange(i + 1, 1).getValues() != "") {
+    ws.getRange(i + 1, 1, ws.getLastRow() - i, 1).moveTo(ws.getRange(location));
+  }
   return(queue)
 }
 
@@ -134,8 +136,10 @@ function move_name_down(move_name, queue) {
   }
   move_location = "A" + i
   target_location = "A" + (i + 1)
-  temp = ws.getRange(target_location).getValues();
-  ws.getRange(target_location).setValue(move_name)
-  ws.getRange(move_location).setValue(temp)  
+  if (ws.getRange(i + 1, 1).getValues() != "") {
+    temp = ws.getRange(target_location).getValues();
+    ws.getRange(target_location).setValue(move_name)
+    ws.getRange(move_location).setValue(temp) 
+  } 
   return(queue)
 }

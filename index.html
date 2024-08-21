@@ -370,10 +370,12 @@
       queue_display.style.marginLeft = "auto";
       queue_display.style.marginRight = "auto";
       queue_display.style.marginTop = "30px";
+      queue_display.style.marginBottom = "50px";
       queue_display.style.backgroundColor = "#5e8b52";
       queue_display.style.paddingLeft = "60px";
       queue_display.style.paddingRight = "70px";
       queue_display.style.paddingTop = "10px";
+      queue_display.style.paddingBottom = "25px";
       queue_display.style.borderRadius = "20px";
       for (i in queue_names) {
         var queue_page = document.createElement("p");
@@ -449,6 +451,15 @@
           }).move_name_down(move_name, current_queue);
         })
       }
+
+      queue_node.style.marginBottom = "0px";
+      down_button.style.marginTop = "5px";
+      top_button.style.marginTop = "5px";
+      remove_button.style.marginTop = "5px";
+      down_button.style.paddingTop = "5px";
+      top_button.style.paddingTop = "5px";
+      remove_button.style.paddingTop = "5px";
+
     }
 
     function reveal_create_queue(){ //shows the queue create menu
