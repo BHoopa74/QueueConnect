@@ -260,7 +260,6 @@
       document.getElementById("submit_btn").addEventListener("click", doStuff); //adds doStuff function to the submit button
 
       function onSuccess(position) {
-        console.log(position);
         document.getElementById("position").textContent = position;
       }
 
@@ -369,7 +368,6 @@
       queue_display.style.display = "block";
       for (i in queue_names) {
         var queue_page = document.createElement("p");
-        console.log(queue_names[i])
         var queue_node = document.createTextNode(queue_names[i]);
         queue_page.appendChild(queue_node);
         var element = document.getElementById("queue_display"); 
@@ -382,9 +380,15 @@
         remove_button.addEventListener("click", function () {
           remove_name = this.getAttribute("name")
           alert(current_queue)
-          google.script.run.withSuccessHandler(function(remove_name, current_queue) {
-            remove_name_from_queue(remove_name, queue)
-          }).display_queue_button_part_2("queue_names");
+          alert(remove_name)
+          google.script.run.withSuccessHandler(function(current_queue) {
+            alert(current_queue)
+            var queue_page = document.getElementById("queue_display")
+            while (queue_page.childElementCount > 4) { //removes all of the names
+              queue_page.removeChild(queue_page.lastChild);
+            }
+            get_queue_contents(current_queue) //adds all of the names back from the updated list
+          }).remove_name_from_queue(remove_name, current_queue);
         })
 
         remove_button.classList.add("remove_button");
@@ -419,6 +423,14 @@
       call_reveal_queue_select_page()
     }
 
+    function refresh(queue_name){
+      alert(queue_name)
+      var queue_page = document.getElementById("queue_display")
+      while (queue_page.childElementCount > 4) {
+        queue_page.removeChild(queue_page.lastChild);
+      }
+      get_queue_contents(queue_name)
+    }
 
     </script>
 

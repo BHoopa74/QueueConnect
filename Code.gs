@@ -17,7 +17,6 @@ function getSheetNames() { //creates an array containing the name of each spread
   var out = new Array()
   var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
   for (var i=0 ; i<sheets.length ; i++) out.push( [ sheets[i].getName() ] )
-  Logger.log(out)
   return out 
 }
 
@@ -60,10 +59,8 @@ function get_queue_contents_GS(queue) {
   names = []
   var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
   var ss = SpreadsheetApp.openByUrl(url).getSheetByName(queue);
-  Logger.log(ss)
   var values = ss.getDataRange().getValues()
   for (n = 0; n < values.length; ++n) {
-    Logger.log(values[n][0])
     if (values[n][0] == null){
       break
     } else {
@@ -71,7 +68,6 @@ function get_queue_contents_GS(queue) {
     names.push(cell)
     }
   }
-  Logger.log(names)
   return names
 }
 
@@ -79,18 +75,26 @@ function remove_name_from_queue(remove_name, queue) {
   var url = "https://docs.google.com/spreadsheets/d/11vMUs21wu_YQox5DDEywTrdxsfyjpaAOMFmeYJbHZ5g/edit?pli=1#gid=0";
   var ss = SpreadsheetApp.openByUrl(url);
   var ws = ss.getSheetByName(queue);
-  i = 0
-  data = sheet.getRange(1, 1, sheet.getLastRow(), 1).getValues();
+  i = 1
+  data = ws.getRange(1, 1, ws.getLastRow(), 1).getValues();
   for (i in data) {
     if (data[i] == remove_name) {
+      i++
       break
     } else {
       i++
     }
   }
   location = "A" + i
-  Logger.log(location)
-  spreadsheet.getRange(location).activate();
-  spreadsheet.getActiveRangeList().clear({contentsOnly: true, skipFilteredRows: true});
-  spreadsheet.getRange('A5:sheet.getLastRow()').moveTo(spreadsheet.getActiveRange());
+  Logger.log("The target name is: " + remove_name)
+  Logger.log("The target name is in: " + queue)
+  Logger.log("The name to be removed was found at: " + location)
+  ws.getRange(location).activate();
+  Logger.log("The item found at the location was: " + ws.getRange(location).getValues())
+  ws.getActiveRangeList().clear({contentsOnly: true, skipFilteredRows: true});
+  // movestart = "A" + (i + 1)
+  // moveend = "A" + ws.getLastRow()
+  // Logger.log(ws.getLastRow())
+  ws.getRange(i + 1, 1, ws.getLastRow() - i, 1).moveTo(ws.getRange(location));
+  return(queue)
 }

@@ -1,22 +1,23 @@
 {
   "timeZone": "Australia/Sydney",
-  "dependencies": {},
+  "dependencies": {
+  },
   "webapp": {
-    "executeAs": "USER_DEPLOYING",
-    "access": "ANYONE_ANONYMOUS"
+    "access": "ANYONE_ANONYMOUS",
+    "executeAs": "USER_DEPLOYING"
   },
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8",
   "sheets": {
-    "macros": [
-      {
-        "menuName": "Test",
-        "functionName": "Test"
-      },
-      {
-        "menuName": "Untitled Macro",
-        "functionName": "UntitledMacro"
-      }
-    ]
+    "macros": [{
+      "menuName": "Test",
+      "functionName": "Test"
+    }, {
+      "menuName": "Untitled Macro",
+      "functionName": "UntitledMacro"
+    }, {
+      "menuName": "move",
+      "functionName": "move"
+    }]
   }
 }
