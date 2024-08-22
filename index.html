@@ -247,6 +247,17 @@
         color: white;
       }
 
+      .name_manage_button {
+        margin-top: 10px;
+        border-width: 2px;
+        padding-bottom: 3px;
+      }
+
+      .queue_name {
+        margin-bottom: 0px;
+        font-size: 45px;
+      }
+
     </style>
 
     <script>
@@ -384,6 +395,8 @@
         var element = document.getElementById("queue_display"); 
         element.appendChild(queue_page);
 
+        queue_page.classList.add("queue_name");
+
         var remove_button = document.createElement("button");
         remove_button.setAttribute("name", queue_names[i]); //sets the name attribute of the button to the name it is next to
         var node = document.createTextNode("X"); 
@@ -399,19 +412,20 @@
           }).remove_name_from_queue(remove_name, current_queue);
         })
 
-        remove_button.classList.add("remove_button");
+        remove_button.classList.add("name_manage_button");
         remove_button.appendChild(node);
         var element = document.getElementById("queue_display");
         element.appendChild(remove_button);
         remove_button.style.display = "inline-block";
-        remove_button.style.borderTopLeftRadius = "10px"
-        remove_button.style.borderBottomLeftRadius = "10px"
-        remove_button.style.borderWidth = "2px"
+        remove_button.style.borderTopLeftRadius = "10px";
+        remove_button.style.borderBottomLeftRadius = "10px";
+        remove_button.style.borderWidth = "2px";
+        remove_button.style.backgroundColor = "#fcc5c8";
 
         var up_button = document.createElement("button");
         up_button.setAttribute("name", queue_names[i]); //sets the name attribute of the button to the name it is next to
         var node = document.createTextNode("↑"); 
-        up_button.classList.add("remove_button");
+        up_button.classList.add("name_manage_button");
         up_button.appendChild(node);
         var element = document.getElementById("queue_display");
         element.appendChild(up_button);
@@ -431,7 +445,7 @@
         var down_button = document.createElement("button");
         down_button.setAttribute("name", queue_names[i]); //sets the name attribute of the button to the name it is next to
         var node = document.createTextNode("↓"); 
-        down_button.classList.add("remove_button");
+        down_button.classList.add("name_manage_button");
         down_button.appendChild(node);
         var element = document.getElementById("queue_display");
         element.appendChild(down_button);
