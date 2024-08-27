@@ -43,7 +43,7 @@ function countSpacesAboveWord(name, queue) { //finds the position of a students 
 
   var spaceCount = 0;
   
-  for (var i = 0; i < data.length; i++) {
+  for (var i = 0; i < data.length; i++) { //finds position of target name if it exists
     if (data[i][0] === targetWord) {
       break;
     }

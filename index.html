@@ -16,15 +16,27 @@
     <!--role selection page-->
     <div class="role_select" id="role_select">
       <p class="select_role_text">Please select a role:</p>
-      <button class="role_select_button" onclick="revealStudent()" id="student_button">Student</button>
-      <button class="role_select_button" onclick="call_reveal_queue_select_page()" id="teacher_button">Teacher</button>
+      <div class="tooltip">
+        <button class="role_select_button" onclick="revealStudent()" id="student_button">Student</button>
+        <span class="tooltiptext">Click to join a queue of your choice</span>
+      </div>
+      <div class="tooltip">
+        <button class="role_select_button" onclick="call_reveal_queue_select_page()" id="teacher_button">Teacher</button>
+        <span class="tooltiptext">Click to create and edit queues</span>
+      </div>
     </div>
 
     <!--student queue selection page-->
     <div class="inputs" id="student_page">
-      <label id="label2">Name: </label><input class="username" type="text" placeholder="Enter name..." id="username">
+      <div class="tooltipstudent">
+        <label id="chse_queue">Name: </label><input class="join_queue_details" type="text" placeholder="Enter name..." id="username">
+        <span class="tooltiptextstud">Enter the name that you want your teacher to see</span>
+      </div>
       <br>
-      <label id="chse_queue">Queue: </label><input type="text" placeholder="Enter queue..." id="choose_queue">
+      <div class="tooltipstudent">
+        <label id="chse_queue">Queue: </label><input class="join_queue_details" type="text" placeholder="Enter queue..." id="choose_queue">
+        <span class="tooltiptextstud">Enter the queue name given by your teacher</span>
+      </div>
     </div>
 
     <!-- student name submit button -->
@@ -42,7 +54,10 @@
     
     <!--teacher queue create/select page-->
     <div class="queue_select_page" id="queue_select_page">
-      <button class="create_queue_button" onclick="reveal_create_queue()" id="create_queue_button">Create a new queue</button>
+      <div class="tooltipqueuecreate">
+        <button class="create_queue_button" onclick="reveal_create_queue()" id="create_queue_button">Create a new queue</button>
+        <span class="tooltiptextqueuecreate">Click to create a new queue with a custom name and password.</span>
+      </div>
     </div>
 
     <!--teacher queue creation page-->
@@ -61,7 +76,6 @@
       <button class="queue_back_button" onclick="call_reveal_queue_select_page(); back()">Back</button>
     </div>
 
-
     <style>
       .username {
         margin-bottom: 10px;
@@ -72,8 +86,16 @@
         margin: auto;
       }
 
+      .join_queue_details {
+        margin-left: -10px;
+      }
+
+      .chse_queue {
+        display: inline-block;
+      }
+
       .queue_label {
-        margin-top: 30px
+        margin-top: 30px;
         display: inline-block;
         margin-left: 495px;
       }
@@ -103,6 +125,7 @@
         transition-duration: 0.2s;
         margin-left: 530px;
         margin-right: 500px;
+        display: inline-block;
         margin-bottom: 15px;
         width: 20%;
         margin-top: 20px;
@@ -117,6 +140,8 @@
         text-align: center;
         margin-top: 175px;
         font-size: 30px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .role_select_button {
@@ -126,6 +151,7 @@
         font-size: 35px;
         border-color: gray;
         transition-duration: 0.4s;
+        position: inline-block;
       }
 
       .role_select_button:hover {
@@ -170,6 +196,7 @@
         text-align: center;
         margin-top: 175px;
         display: none;
+        margin-left: 500px;
       }
 
       input {
@@ -294,9 +321,136 @@
         border-width: 2px;
       }
 
+      /* Tooltip container */
+      .tooltip {
+        position: relative;
+        width: 130px;
+        display: inline-block;
+        margin-left: 25px;
+        margin-right: 50px;
+      }
+
+      /* Tooltip text */
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 130px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        font-size: 15px;
+      
+        /* Position the tooltip text */
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -35px;
+        margin-bottom: 5px;
+      }
+
+      /* Show the tooltip text when you mouse over the tooltip container */
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+      }
+
+      .tooltip .tooltiptext::after {
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+      }
+
+
+
+      /* Tooltip container */
+      .tooltipstudent {
+        position: relative;
+        width: 130px;
+      }
+
+      /* Tooltip text */
+      .tooltipstudent .tooltiptextstud {
+
+        visibility: hidden;
+        width: 130px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        font-size: 15px;
+      
+        /* Position the tooltip text */
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+      }
+
+      /* Show the tooltip text when you mouse over the tooltip container */
+      .tooltipstudent:hover .tooltiptextstud {
+        visibility: visible;
+      }
+
+      .tooltipstudent .tooltiptextstud::after {
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+      }
+
+      /* Tooltip container */
+      .tooltipqueuecreate {
+        position: relative;
+        display: inline-block;
+      }
+
+      /* Tooltip text */
+      .tooltipqueuecreate .tooltiptextqueuecreate {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+      
+        /* Position the tooltip text */
+        position: absolute;
+        bottom: 100%;
+        left: 49%;
+      }
+
+      /* Show the tooltip text when you mouse over the tooltip container */
+      .tooltipqueuecreate:hover .tooltiptextqueuecreate {
+        visibility: visible;
+      }
+
+      .tooltipqueuecreate .tooltiptextqueuecreate::after {
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 50%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+      }
+
     </style>
 
+
     <script>
+
       //global variables
       var lists = []; //an array that is filled with the names of all queues
       var queue_names = "unchanged"
