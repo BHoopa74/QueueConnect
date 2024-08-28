@@ -54,18 +54,19 @@
     
     <!--teacher queue create/select page-->
     <div class="queue_select_page" id="queue_select_page">
-      <div class="tooltipqueuecreate">
-        <button class="create_queue_button" onclick="reveal_create_queue()" id="create_queue_button">Create a new queue</button>
-        <span class="tooltiptextqueuecreate">Click to create a new queue with a custom name and password.</span>
-      </div>
+      <button class="create_queue_button" onclick="reveal_create_queue()" id="create_queue_button" title="Create a new queue with a custom name and password">Create a new queue</button>
+      <p class="queue_create_tip">Click on the below buttons to view your queues:</p>
     </div>
 
     <!--teacher queue creation page-->
     <div class="queue_create_menu" id="queue_create_menu">
+      <button class="queue_back_button" onclick="call_reveal_queue_select_page(); back()" title="Go back to queue page">Back</button>
       <br>
-      <label class="queue_label">Queue name: </label><input class="queue_inputs" type="text" placeholder="Enter name..." id="queue_name">
+      <label class="queue_label">Queue name: </label><input class="queue_inputs" type="text" placeholder="Enter name of new queue..." id="queue_name">
+      <p class="create_queue_tip">Type the name that you will use to select this queue</p>
       <br>
-      <label class="queue_label">Password: </label><input class="queue_inputs" type="text" placeholder="Enter password..." id="queue_password">
+      <label class="queue_label">Password: </label><input class="queue_inputs" type="text" placeholder="Enter password for new queue..." id="queue_password">
+      <p class="create_queue_tip">Type the password that students will use to join this queue</p>
       <br>
       <button class="queue_submit" onclick="submit_queue()" id="queue_submit">Create Queue</button>
     </div>
@@ -73,7 +74,7 @@
     <!-- queue display page -->
     <div class="queue_display" id="queue_display">
       <p id="queue_title">Students:</p>
-      <button class="queue_back_button" onclick="call_reveal_queue_select_page(); back()">Back</button>
+      <button class="queue_back_button" onclick="call_reveal_queue_select_page(); back()" title="Go back to queue page">Back</button>
     </div>
 
     <style>
@@ -81,9 +82,28 @@
         margin-bottom: 10px;
       }
 
+      .create_queue_tip {
+        font-size: 15px;
+        color: gray;
+        text-align: center;
+      }
+
       .queue_inputs {
         display: block;
         margin: auto;
+      }
+
+      .queue_inputs::placeholder {
+        font-size: 20px;
+      }
+
+      .queue_create_tip {
+        color: gray;
+        text-align: center;
+        margin-bottom: 20px;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .join_queue_details {
@@ -126,7 +146,7 @@
         margin-left: 530px;
         margin-right: 500px;
         display: inline-block;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         width: 20%;
         margin-top: 20px;
       }
@@ -283,6 +303,7 @@
       .name_manage_button:hover {
         transform: scale(1.1);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
       }
 
       .queue_name {
@@ -409,43 +430,6 @@
         border-color: black transparent transparent transparent;
       }
 
-      /* Tooltip container */
-      .tooltipqueuecreate {
-        position: relative;
-        display: inline-block;
-      }
-
-      /* Tooltip text */
-      .tooltipqueuecreate .tooltiptextqueuecreate {
-        visibility: hidden;
-        width: 120px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        padding: 5px 0;
-        border-radius: 6px;
-      
-        /* Position the tooltip text */
-        position: absolute;
-        bottom: 100%;
-        left: 49%;
-      }
-
-      /* Show the tooltip text when you mouse over the tooltip container */
-      .tooltipqueuecreate:hover .tooltiptextqueuecreate {
-        visibility: visible;
-      }
-
-      .tooltipqueuecreate .tooltiptextqueuecreate::after {
-        content: " ";
-        position: absolute;
-        top: 100%; /* At the bottom of the tooltip */
-        left: 50%;
-        border-width: 5px;
-        border-style: solid;
-        border-color: black transparent transparent transparent;
-      }
-
     </style>
 
 
@@ -554,6 +538,7 @@
 
           //CSS for queue buttons
           btn.classList.add("queue_button");
+          btn.title = "View the selected queue"
 
 
           btn.appendChild(node);
@@ -606,6 +591,7 @@
         //CSS for the remove button
         remove_button.classList.add("remove_button")
         remove_button.classList.add("name_manage_button");
+        remove_button.title = "Remove this student"
 
         //appends the up button
         var up_button = document.createElement("button");
@@ -617,6 +603,7 @@
 
         //CSS for the up button
         up_button.classList.add("name_manage_button");
+        up_button.title = "Move this student up one position"
 
         //adds functionality to the up button
         up_button.addEventListener("click", function () {
@@ -641,6 +628,7 @@
         //CSS for the down button
         down_button.classList.add("name_manage_button");
         down_button.classList.add("down_button")
+        down_button.title = "Move this student down one position"
 
         //adds functionality to the down button
         down_button.addEventListener("click", function () {
@@ -660,6 +648,7 @@
       hide_all()
       var queue_create_menu = document.getElementById("queue_create_menu");
       queue_create_menu.style.display = "block";
+
     }
 
     function submit_queue(){ //creates a new queue
