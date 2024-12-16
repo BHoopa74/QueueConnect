@@ -16,6 +16,10 @@
       {
         "menuName": "Untitled Macro",
         "functionName": "UntitledMacro"
+      },
+      {
+        "menuName": "move",
+        "functionName": "move"
       }
     ]
   }
